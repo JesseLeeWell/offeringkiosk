@@ -1,0 +1,85 @@
+body
+{
+	font-family: 'Source Sans Pro', sans-serif;
+	
+}
+.content
+{
+	background-color:white;
+}
+.introheading
+{
+	text-align:center;
+	font-size:1.8em;
+	color:grey;
+	
+	
+}
+.videoheading
+{
+	text-align:center;
+	font-size:1.5em;
+	color:grey;
+	
+	
+}
+.ui-content
+{
+	margin-bottom:60px;
+	background-color:white;
+}
+
+.testamony_box
+{
+	
+   background: url("../images/testamony_side.jpg") repeat-y scroll 225px 0 rgba(0, 0, 0, 0);
+    padding-bottom: 15px;
+   
+}
+.testamony_left
+{
+    width: 235px;
+	
+	display: inline-block;
+	text-align:center;
+	vertical-align:top;
+	zoom:1; *display: inline;
+	
+}
+.testamony_right
+{	
+	color: #999999;   
+    font-family: georgia,times new roman;
+    font-size: 25px;
+    font-style: italic;
+    line-height: 28px;
+    text-align: left;
+    width: 490px;
+	padding-left:20px;
+	display: inline-block;
+	zoom:1; *display: inline;
+}
+
+
+
+
+
+
+.smallScreen  .testamony_box
+{
+	padding: 10px 0px 0px 10px;
+	border-bottom: 2px solid grey;
+	background: None;
+   
+}
+
+.smallScreen .testamony_left
+{
+    width: 100%;
+	
+}
+.smallScreen .testamony_right
+{	
+	
+    width: 100%
+}
