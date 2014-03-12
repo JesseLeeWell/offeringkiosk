@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+	<head>
+       
+		<title>Offering Kiosk</title>
+		<meta charset="utf-8">
+		
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+		
+		
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile.structure-1.4.0.min.css" />
+		
+		
+		<link rel="stylesheet" href="themes/ctg.min.css" />
+			
+		<link rel="stylesheet" href="styles/style.css" />
+		<link rel="stylesheet" href="styles/stylesmall.css" />
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script> 	
+		<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+        
+		
+       
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="scripts/main.js"></script>
+        
+        <script type="text/javascript" charset="utf-8" src="scripts/unimag.js"></script>
+		
+	</head>
+	<body id='pagebody'>
+		
+		<div class="content">
+			<!-- Start of index page page -->
+			<div data-role="page" id="indexpage">
+				<div data-role="header" data-position="fixed" >
+					<div style='padding:5px; background-color:white; border-bottom:1px solid grey;'>
+						<span class='mailflowbutton' onclick ="javascript:openDonationPage('');"  data-transition="slidefade" data-inline="true">Giving Mode &#10140;</span>
+						<span class='mailflowbutton' onclick ="javascript:openDonationPage('/donation_prompt?show_purchase_form=true');"  data-transition="slidefade" data-inline="true">Point Of Sale Mode &#10140;</span>
+					
+					</div>
+				</div>
+				<div data-role="content">
+					<div style='text-align:center;'>
+						<img class = 'settingslogo'  src='images/ContinueToGive.png' style='width:60%; max-width:450px; min-width:100px;'/>
+						<p>
+							Making Giving Easy
+						</p>
+					</div>
+					
+					<div id='kioskOrganizationDisplayName' style='text-align:center;'>
+							
+					</div>
+					<div class='largeScreen-setupSteps' style='display:none;'>
+						<div class='step-pin-outer' onclick ="javascript:showSecureKioskPage();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										1.
+									</div>
+									<span class='step-text'>
+										Create a pin to secure your kiosk
+									</span>
+									<span class='step-start'>
+										 <span class='step-arrow'>START &#10140;</span>
+									</span>
+									<span class='step-edit'>
+										 <span style='padding-right: 10px;'>EDIT </span><img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+								<span class='step-checkbox'>
+									<img width='100%'src='images/tick.png' />
+								</span>	
+							</div>
+						</div>
+						<div class='spacer'></div><div class='spacer'></div>
+						<div class='step-search-outer' onclick ="javascript:openSearch();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										2.
+									</div>
+									<span class='step-text'>
+										Set Kiosk to your Church or Organization
+									</span>
+									<span class='step-start'>
+										 <span class='step-arrow'>START &#10140;</span>
+									</span>
+									<span class='step-edit'>
+										 <span style='padding-right: 10px;'>EDIT </span><img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+								<span class='step-checkbox'>
+									<img width='100%'src='images/tick.png' />
+								</span>	
+							</div>
+						</div>
+						<div class='spacer'></div><div class='spacer'></div>
+						<div class='step-startscreen-outer' onclick ="javascript:openSetStartScreenPage();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										3.
+									</div>
+									<span class='step-text'>
+										Set start screen
+									</span>
+									<span class='step-start'>
+										 <span class='step-arrow'>START &#10140;</span>
+									</span>
+									<span class='step-edit'>
+										 <span style='padding-right: 10px;'>EDIT </span><img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+								<span class='step-checkbox'>
+									<img width='100%'src='images/tick.png' />
+								</span>	
+							</div>
+						</div>
+						<div class='spacer'></div><div class='spacer'></div>
+						<div class='step-recievedonations-outer' onclick ="javascript:openStartRecivingDonationsPage();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										4.
+									</div>
+									<span class='step-text'>
+										Start Receiving Donations!
+									</span>
+									<span class='step-start'>
+										 <span class='step-arrow'>START &#10140;</span>
+									</span>
+									<span class='step-edit'>
+										 <span style='padding-right: 10px;'>EDIT </span><img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+								<span class='step-checkbox'>
+									<img width='100%'src='images/tick.png' />
+								</span>	
+							</div>
+						</div>
+						<div class='spacer'></div><div class='spacer'></div>
+						
+					</div>
+					<div class='smallScreen-setupSteps' style='display:none;'>
+						<div class='step-pin-outer' onclick ="javascript:showSecureKioskPage();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										1
+									</div>
+									<div class='step-checkbox'>
+										<img width='100%'src='images/tick.png' />
+									</div>
+									<span class='step-text'>
+										Create a pin to secure your kiosk
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+									<span class='step-edit'>
+										 <img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class='spacer'></div>
+						<div class='step-search-outer' onclick ="javascript:openSearch();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										2
+									</div>
+									<div class='step-checkbox'>
+										<img width='100%'src='images/tick.png' />
+									</div>
+									<span class='step-text'>
+										Set Kiosk to your Organization
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+									<span class='step-edit'>
+										 <img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+								
+							</div>
+						</div>
+						<div class='spacer'></div>
+						<div class='step-startscreen-outer' onclick ="javascript:openSetStartScreenPage();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										3
+									</div>
+									<div class='step-checkbox'>
+										<img width='100%'src='images/tick.png' />
+									</div>
+									<span class='step-text'>
+										Set start screen
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+									<span class='step-edit'>
+										 <img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class='spacer'></div>
+						<div class='step-recievedonations-outer' onclick ="javascript:openStartRecivingDonationsPage();">
+							<div class ='step-outer'>
+								
+								<span class='step-inner-wrapper'>
+									<div class='step-number' >
+										4
+									</div>
+									<div class='step-checkbox'>
+										<img width='100%'src='images/tick.png' />
+									</div>
+									<span class='step-text'>
+										Start Receiving Donations!
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+									<span class='step-edit'>
+										 <img width='20px'src='images/editicon.jpg' />
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class='spacer'></div>
+						
+					</div>
+					
+					<div id='helpfullinks' tyle='display:none;'>
+						<div style='text-align:center;'>						
+							<p>
+								Helpful Links
+							</p>
+						</div>
+						<div class='smallScreen-setupSteps' style='display:none;'>							
+							<div class ='step-outer step-claimorganization-outer' onclick='openSignupPage();'>
+								<span class='step-inner-wrapper' >
+									<span class='step-text'>
+										Claim Your Organization!
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer appleonly applestoresafe'>
+								<span class='step-inner-wrapper' onclick='loadPurchasePage();'>
+									<span class='step-text'>
+										Get a card reader
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer'>
+								<span class='step-inner-wrapper' onclick='loadPurchasePage();'>
+									<span class='step-text'>
+										Get a kiosk stand
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer'>
+								<span class='step-inner-wrapper appleonly' onclick='loadLockKioskHelp();'>
+									<span class='step-text'>
+										How to lock device to kiosk app
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer'>
+								<span class='step-inner-wrapper appleonly' onclick='loadLearnMorePage();'>
+									<span class='step-text'>
+										Learn more about Continue To Give
+									</span>
+									<span class='step-start'>
+										 &#10140;
+									</span>
+								</span>
+							</div>
+						</div>
+						<div class='largeScreen-setupSteps' style='display:none;'>							
+							<div class ='step-outer step-claimorganization-outer' onclick='openSignupPage();'>
+								<span class='step-inner-wrapper' >
+									<span class='step-text' style='height:55px; line-height:55px;'>
+										Claim Your Organization! &#10140;
+									</span>									
+								</span>
+							</div>
+							<div class ='step-outer appleonly applestoresafe'>
+								<span class='step-inner-wrapper '>
+									<span class='step-text' style='height:55px; line-height:55px;' onclick='loadPurchasePage();'>
+										Get a card reader &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer'>
+								<span class='step-inner-wrapper' style='height:55px; line-height:55px;' onclick='loadPurchasePage();'>
+									<span class='step-text'>
+										Get a kiosk stand &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer appleonly'>
+								<span class='step-inner-wrapper' style='height:55px; line-height:55px;' onclick='loadLockKioskHelp();'>
+									<span class='step-text'>
+										How to lock device to kiosk app &#10140;
+									</span>
+								</span>
+							</div>
+							<div class ='step-outer appleonly'>
+								<span class='step-inner-wrapper' style='height:55px; line-height:55px;' onclick='loadLearnMorePage();'>
+									<span class='step-text'>
+										Learn more about Continue To Give &#10140;
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					<a style="display:none;" href="javascript:clearDataForTesting();" data-role="button" data-transition="slidefade" data-inline="true">Clear Data</a>
+					<div style='text-align:center; padding:10px 5px 10px 5px;'>
+					To learn more about how our revolutionary fundraising tools can help your organization, visit us on the web at <a onclick='loadLearnMorePage();'>www.ContinueToGive.com</a>
+					</div>
+				</div>
+				
+				<div data-role="footer" style='text-align:center;' data-position="fixed">
+					<div class='settingsfooter'>
+						<span style='width:32%; display:inline-block;border-right:1px solid grey; background-color:#00adee; color:white;' onclick="javascript:loadSettingsPage();">
+							<p >Settings</p>
+						</span>
+						<span style='width:32%; display:inline-block;border-right:1px solid grey;' onclick="javascript:loadContactRequest();">
+							<p >Contact</p>
+						</span>
+						<span style='width:32%; display:inline-block;' onclick="javascript:loadMoreInfo();">
+							<p >Intro</p>
+						</span>
+					</div>
+				</div>
+				
+			</div>
+			<!-- end index page -->
+			<!-- Start of securekioskpage page page -->
+			<div data-role="page" id="securekioskpage">
+			<div style ='padding:10px'>
+				<div data-role="header" >
+					<h1>Create a Pin</h1>
+				</div>
+				
+				<div >
+					<div id='editpintext'>
+						<p>
+							You can edit your information here:  Please confirm your current pin and enter your new information. 
+						</p>
+					</div>
+					<div id='createpintext'>
+						<p>
+							Please secure your Offering Kiosk with a pin so that no one can change your setup without your pin.
+						</p>
+					</div>
+					<span id ='editpinpin'>
+					<input id="currentpin" type='number' placeholder='Current Pin - Required'  />
+					</span>
+					<input class='display-inline' type='number' id="securepin" placeholder='Pin - Required' />
+					<input id="secureconfirmpin" type='number' placeholder='Confirm Pin'  />
+					<p>
+						Please fill this in, just in case your forget your pin, we'll email it back.
+					</p>
+					<input id="email" placeholder='Email Address - Required' />
+					<input id="name" placeholder='Name - Optional'/>
+					
+					<span>Optional</span><input id="phonenumber" type='number' placeholder='Phone Number - Optional'/>
+					<h3>I represent a</h3>
+					<select id='represents'>
+						<option value="Church" >Church</option>
+						<option value="Nonprofit" >Non-profit</option>
+						<option value="Missionary" >Missionary</option>
+						<option value="Person" >Person</option>
+						<option value="Donor" >Donor</option>
+						
+					</select>				
+					
+					<div class='spacer'></div><div class='spacer'></div><div class='spacer'></div>
+					<span class='cancelflowbutton' onclick ="javascript:loadSettingsPage();"  data-transition="reverse slidefade" data-inline="true">Cancel</span>
+					<span class='mailflowbutton' onclick ="javascript:secureKiosk();"  data-transition="slidefade" data-inline="true">Save  &#38; Continue &#10140;</span>
+					<div class='spacer'></div><div class='spacer'></div><div class='spacer'></div>
+					
+				</div>
+			</div>
+			</div>
+			<!-- end securekioskpage page -->
+			<!-- Start of unlockkioskpage page -->
+			<div data-role="page" id="unlockkioskpage">
+				<div style ='padding:10px'>
+				<div data-role="header" >
+					<h1>Enter Pin</h1>
+				</div>				
+				<div >
+					<p>
+						Please enter your pin to continue.
+					</p>
+					<input id="unlockpin" type='number' placeholder='Pin' />				
+				
+					<span class='mailflowbutton' onclick ="javascript:unlockKiosk();" data-transition="slidefade"  data-inline="true">Unlock</span>
+					
+				
+					<a onclick="javascript:fogotPin();" data-role="button" data-transition="slidefade" data-inline="true">Forgot Pin</a>
+					<a href ="javascript:cancelUnlockKiosk();" data-role="button" data-transition="reverse slidefade" data-inline="true">Cancel</a>
+					
+					
+				</div>
+			</div>
+			</div>
+			<!-- end unlockkioskpage page -->
+			<!-- Start of setstartscreenpage page -->
+			<div data-role="page" id="setstartscreenpage">
+				<div style ='padding:10px'>
+				<div data-role="header" >
+					<h1>Set your start screen</h1>
+				</div>				
+				<div >
+					<fieldset data-role="controlgroup" data-inline="true">
+						<legend>When you start your app, what screen do you want to open:</legend>
+					
+						<input data-inline="true" type="radio"  name="startpagegroup" id="radiostartpagegroupsettingspage" value="settingspage">
+						<label for="radiostartpagegroupsettingspage">Settings Page</label>
+
+						<input class='applestoresafe' type="radio"  name="startpagegroup" id="radiostartpagegroupdonationpage" value="donationpage">
+						<label class='applestoresafe' for="radiostartpagegroupdonationpage">Kiosk: Giving Page</label>
+						<input class='applestoresafe' type="radio"  name="startpagegroup" id="radiostartpagegrouppointofsalepage" value="pointofsalepage" >
+						<label class='applestoresafe' for="radiostartpagegrouppointofsalepage">Kiosk:Point of Sale Page</label>
+					</fieldset>
+					
+					<span class='mailflowbutton' onclick ="javascript:closeSetStartScreenPage();"  data-transition="slidefade" data-inline="true">Save  &#38; Continue &#10140;</span>
+				</div>
+			</div>
+			</div>
+			<!-- end setstartscreenpage page -->
+			<!-- Start of startreceivingdonationspage page -->
+			<div data-role="page" id="startreceivingdonationspage">
+				<div >
+					<div data-role="header" >
+						<div style='padding:5px; background-color:white; border-bottom:1px solid grey;'>
+							<span class='mailflowbutton' onclick ="javascript:openDonationPage('');"  data-transition="slidefade" data-inline="true">Giving Mode &#10140;</span>
+							<span class='mailflowbutton' onclick ="javascript:openDonationPage('/donation_prompt?show_purchase_form=true');"  data-transition="slidefade" data-inline="true">Point Of Sale Mode &#10140;</span>
+						</div>
+						
+					</div>	
+					<div data-role="content" style ='padding:10px; text-align:center;'>
+						<div>
+							<h1>You are ready to start accepting donations on this kiosk!</h1>
+							<p>
+							Just click the Giving or Point of Sale mode above, then set your kiosk in a convenient place so anyone can walk up and give via credit card or ACH, its that simple!
+							</p>
+							
+							<img src='images/kiosk.png' />
+							<div class='spacer'></div><div class='spacer'></div><div class='spacer'></div>
+						</div>
+						<div id='startrecievingdonationsunclaimeddiv' style='display:none;'>
+							
+							<p>
+								Since this Organization has not been claimed, we will mail your donations to:
+							
+							</p>
+							<span id='organizationinfo' style='text-align:left;'>
+							
+							</span>
+							<p>
+								Want Donations to go directly to your organization's bank account?</br>
+								Want a FREE Kiosk Stand?</br>
+								Then claim your organization on Continue To Give now!
+							
+							</p>
+						
+							<span class='cancelflowbutton' onclick ="javascript:closeStartRecivingDonationsPage();"  data-transition="reverse slidefade" data-inline="true">LATER</span>
+							<span class='mailflowbutton' onclick ="javascript:openSignupPage();"  data-transition="slidefade" data-inline="true">ClAIM MY ORGANIZATION &#10140;</span>
+						</div>
+						<div id='startrecievingdonationsclaimeddiv' >
+							<span class='cancelflowbutton' onclick ="javascript:closeStartRecivingDonationsPage();"  data-transition="reverse slidefade" data-inline="true">Close</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end startreceivingdonationspage page -->			
+		</div>
+	</body>
+	<footer class="footer">
+		<div></div>
+	</footer>
+</html>

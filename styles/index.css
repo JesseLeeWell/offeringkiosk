@@ -1,0 +1,134 @@
+
+/*theme*/
+
+body {
+  font-family: verdana;
+  font-size: 16pt;
+}
+#console {
+  font-family: lucida console,monospace;
+  font-size: 10pt;
+}
+.tab-label {
+  background-color: #dddddd;
+  color: #656565;
+  font-size: 14pt;
+}
+.page, .tab-selected {
+  background-color: #F4F4F4;
+}
+.tab-selected {
+  color: #101010;
+}
+
+.uibutton:active {
+  background-color: #d0d0d0;
+}
+.uibutton {
+  background-color: #a0a0a0;
+  border: 0 none;
+  color: white;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 10px 5px;
+  padding: 5px 10px;
+}
+.labelOk {
+  color: #70B040;
+}
+.labelNotOk {
+  color: #B06040;
+}
+
+/*layout*/
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+  -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+  margin: 0;
+}
+#root {
+  height: 100%;
+  width: 100%;
+}
+.header-pane {
+  background-color: #555555;
+  color: white;
+  display: table;
+  height: 8%;
+  width: 100%;
+  overflow: hidden;
+}
+.header-label {
+  display: table-cell;
+  font-weight: bold;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+.console-pane {
+  height: 40%;
+  position: relative;
+  overflow: hidden;
+}
+#console {
+  height: 100%;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  margin:0;
+  border-width: 0;
+  padding: 0;
+}
+#console-clear {
+  height: 37px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity:0.5;
+}
+.control-pane {
+  height: 52%;
+  overflow: hidden;
+}
+.page-pane {
+  height: 85%;
+  position: relative;
+}
+.page {
+  height: 100%;
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+}
+.page-selected {
+  z-index: 1;
+}
+.tab-pane {
+  height: 15%;
+  display: table;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.tab-item {
+  border-right: 2px solid white;
+  display: table-cell;
+}
+.tab-label-container {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.tab-label {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
