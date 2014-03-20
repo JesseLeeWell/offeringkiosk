@@ -239,6 +239,7 @@ function iabLoadStart(event) {
  function iabLoadStartSearch(event) { 
 	
 	cururl = event.url;
+	alert("here");
 	
 	if(cururl.indexOf("?displayname") != -1)
 	{
