@@ -288,7 +288,7 @@ function iabLoadStart(event) {
  function iabLoadStartDonation(event) { 
 	
 	cururl = event.url;
-	
+	alert("here");
 	if(cururl.indexOf("kiosksettings") != -1)
 	{
 		
