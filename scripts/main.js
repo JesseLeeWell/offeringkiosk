@@ -273,7 +273,7 @@ function iabLoadStart(event) {
  function iabLoadStopDonation(event) { 
 	
 	cururl = event.url;
-	
+	alert("here");
 	if(cururl.indexOf("donation_prompt") != -1)
 	{
         //activate card reader
