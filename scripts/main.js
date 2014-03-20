@@ -1415,7 +1415,7 @@ function secureKiosk()
 	//first gather the data they entered
 	//do some checking and validating	
 	var pinstored = storageGet('pin');
-	var oldpinentered = $('#securepin').val();
+	var oldpinentered = $('#currentpin').val();
 	var pin = $('#securepin').val();
 	var confirmpin = $('#secureconfirmpin').val();
 	var email = $('#email').val();
@@ -1430,7 +1430,7 @@ function secureKiosk()
 	{
 		//change the redirect flow since they came here with 
 		
-		if(oldpinentered != pinstored)
+		if(!(oldpinentered == pinstored))
 		{
 			message = message +"Incorrect Pin" + '\n';
 		}
