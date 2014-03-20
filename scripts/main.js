@@ -239,7 +239,6 @@ function iabLoadStart(event) {
  function iabLoadStartSearch(event) { 
 	
 	cururl = event.url;
-	alert("here");
 	
 	if(cururl.indexOf("?displayname") != -1)
 	{
@@ -274,7 +273,7 @@ function iabLoadStart(event) {
  function iabLoadStopDonation(event) { 
 	
 	cururl = event.url;
-	alert("here");
+	
 	if(cururl.indexOf("donation_prompt") != -1)
 	{
         //activate card reader
@@ -289,7 +288,7 @@ function iabLoadStart(event) {
  function iabLoadStartDonation(event) { 
 	
 	cururl = event.url;
-	alert("here");
+	
 	if(cururl.indexOf("kiosksettings") != -1)
 	{
 		
@@ -677,7 +676,8 @@ function showSecureKioskPage()
 	//first decide if they have already locked hteir kiosk or not.
 	//if they have, then they are going to edit this page.
 	//we will hide and show different buttons and pin number
-	
+	$('#securepin').val('');
+	$('#secureconfirmpin').val('');
 	if(isPinSet())
 	{
 		//then they edit what they have
