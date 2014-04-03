@@ -51,7 +51,7 @@ var _storagePageID = "storagePageID";
 var _storageDisplayName = "storageDisplayName";
 var _storageFullURL = "storageFullURL";
 var _storagePin = 'pin';
-var _kioskversion = '3.0';
+var _kioskversion = '3.1';
 var _kiosklicense = 'store';
 //var _kiosklicense = 'enterprize';
 
