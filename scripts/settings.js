@@ -5,11 +5,11 @@
 var environment = 'prod';
 //var environment = 'local';
 
-//var _kioskversion = '3.1';
-//var _kiosklicense = 'store';
+var _kioskversion = '3.2';
+var _kiosklicense = 'store';
 
-var _kiosklicense = 'enterprise';
-var _kioskversion = 3.0;
+//var _kiosklicense = 'enterprise';
+//var _kioskversion = 3.0;
 
 //setup the whitelabel we are compilig for
 var _whitelabel = 'continuetogive';
@@ -38,9 +38,9 @@ var _whitelabel = 'platinumgiving';
 var _whitelabelfullname = 'Platinum Giving';
 var _whitelabeldisplayurl = 'www.PlatinumGiving.com';
 
-var _whitelabel = 'platinumgiving';
-var _whitelabelfullname = 'Platinum Giving';
-var _whitelabeldisplayurl = 'www.PlatinumGiving.com';
+var _whitelabel = 'continuetogive';
+var _whitelabelfullname = 'Continue To Give';
+var _whitelabeldisplayurl = 'www.ContiueToGive.com';
 
 
 var _whitelablelogo = 'images/logos/'+_whitelabel+'_logo.png';
