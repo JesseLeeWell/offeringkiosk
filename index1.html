@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="format-detection" content="telephone=no" />
+ <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+ <title>PhoneGap uniMag demo</title>
+
+ <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+ <script type="text/javascript" src="js/jqm131.vmouse.min.js"></script>
+ <script type="text/javascript" src="cordova.js"></script>
+ <script type="text/javascript" src="js/unimag.js"></script>
+
+ <script>
+$(function() {
+
+//fit window height 
+function fitWindow() {
+  $("#root").height(window.innerHeight);
+}
+$(window).resize(fitWindow);
+fitWindow();
+  
+//tab select logic 
+// When a tab is selected, show the page at corresponding index 
+$(document).on('vclick', '.tab-label', function() {
+  if ( $(this).hasClass('tab-selected' ) )
+    return;
+  
+  $('.tab-selected').removeClass('tab-selected');
+  $(this).addClass('tab-selected');
+  
+  var tabIndex = $('.tab-label').index(this);
+  $('.page').removeClass('page-selected').eq(tabIndex).addClass('page-selected');
+});
+
+//console
+$('#console-clear').on('vclick', function() {
+  $('#console').val('');
+});
+function UILog(msg) {
+  var con = $('#console');
+  con.val(con.val()+msg+'\n');
+  con.scrollTop(con[0].scrollHeight - con.height());
+}
+
+
+function appInit() {
+  //-----------------------------------------------------------------
+  //"Reader" page setup
+  //-----------------------------------------------------------------
+  
+  //activate SDK, setup notification callback, setup ui
+  function activateSDK() {
+    //activate sdk and register notification callback
+    unimag.activateSDK(function(type) {
+      var d = {};
+      var E = unimag.NotifEnum;
+      d[E.Attach    ]='Disconnected'; //attached, but haven't connected
+      d[E.Detach    ]='Detached'    ; //reader detached
+      d[E.Connect   ]='Connected'   ; //reader connected, ready
+      d[E.Disconnect]='Disconnected'; //attached, but haven't connected
+      uiSetReaderStatus(d[type]);
+    });
+    
+    uiSetActive();
+  }
+  
+  $('#btnActivateSDK').on('vclick', function() {
+    if (unimag.isSDKActive())
+      return;
+    
+    activateSDK();
+  });
+  
+  $('#btnDeactivateSDK').on('vclick', function() {
+    if (! unimag.isSDKActive() )
+      return;
+    
+    unimag.deactivateSDK();
+    uiSetInactive();
+  });
+
+  $('#btnStartConnect').on('vclick', function() {
+    unimag.startTaskConnect(function(task, taskNotif, info) {
+      var E = unimag.TaskNotifEnum;
+      switch(taskNotif) {
+        case E.StartFailed:
+          UILog(task+' task failed to start: '+info.StartFailedReason);
+        break;
+        case E.Started:
+          uiSetTaskStatus('Connecting');
+        break;
+        case E.Stopped:
+          uiSetTaskStatus(null);
+          if (!info.ok)
+            UILog('connection timed-out');
+        break;
+      }
+    });
+  });
+  
+  //-----------------------------------------------------------------
+  //"Swipe" page setup
+  //-----------------------------------------------------------------
+  $('#btnStartSwipe').on('vclick', function() {
+    unimag.startTaskSwipe(function(task, taskNotif, info) {
+      var E = unimag.TaskNotifEnum;
+      switch(taskNotif) {
+        case E.StartFailed:
+          UILog(task+' task failed to start: '+info.StartFailedReason);
+        break;
+        case E.Started:
+          uiSetTaskStatus('Waiting for Swipe');
+        break;
+        case E.Stopped:
+          uiSetTaskStatus(null);
+          if (!info.ok)
+            UILog('swipe failed');
+          if (info.data) {
+            UILog('card swipe:');
+            UILog('hex: """\n'  +getBase16 (info.data)+'\n"""');
+            UILog('ascii: """\n'+getStrRepr(info.data)+'\n"""');
+          }
+        break;
+      }
+    });
+  });
+  
+  $('#btnStopTask').on('vclick', function() {
+    unimag.stopTask();
+  });
+  
+  //-----------------------------------------------------------------
+  //"Command" page
+  //-----------------------------------------------------------------
+  
+  $('#btnStartSendCommand').on('vclick', function() {
+    unimag.startTaskSendCommand(function(task, taskNotif, info) {
+      var E = unimag.TaskNotifEnum;
+      switch(taskNotif) {
+        case E.StartFailed:
+          UILog(task+' task failed to start: '+info.StartFailedReason);
+        break;
+        case E.Started:
+          uiSetTaskStatus('Sending Command');
+        break;
+        case E.Stopped:
+          uiSetTaskStatus(null);
+          if (!info.ok)
+            UILog('send command failed');
+          if (info.data) {
+            UILog('command response:');
+            UILog('hex: """\n'  +getBase16 (info.data)+'\n"""');
+            UILog('ascii: """\n'+getStrRepr(info.data)+'\n"""');
+          }
+        break;
+      }
+    }, $('#selCommand').val());
+  });
+  
+  //-----------------------------------------------------------------
+  //UI helper
+  //-----------------------------------------------------------------
+  
+  function uiSetSDKActivationStatus(active) {
+    $('#lbSDKActivation').text(active ? 'Active' : 'Inactive').
+      removeClass().addClass(active ? 'labelOk' : 'labelNotOk');
+  }
+  
+  function uiSetReaderStatus(status) {
+    $('#lbReaderStatus').text(status ? status : '---');
+    if (status == 'Connected')
+      $('#lbReaderStatus').addClass('labelOk');
+    else
+      $('#lbReaderStatus').removeClass('labelOk');
+    
+    if (status == 'Disconnected')
+      $('#lbReaderStatus').addClass('labelNotOk');
+    else
+      $('#lbReaderStatus').removeClass('labelNotOk');
+  }
+  
+  function uiSetTaskStatus(taskDesc) {
+    if (taskDesc) {
+      $('#lbTask').text(taskDesc);
+      $('#lbSpin').css('display', 'table-cell');
+    }
+    else {
+      $('#lbTask').text('');
+      $('#lbSpin').css('display', 'none');
+    }
+  }
+  
+  function uiSetInactive() {
+    uiSetSDKActivationStatus(false);
+    uiSetReaderStatus(null);
+    uiSetTaskStatus(null);
+  }
+  
+  function uiSetActive() {
+    uiSetSDKActivationStatus(true);
+    uiSetReaderStatus('Detached');
+    uiSetTaskStatus(null);
+  }
+  
+  //get base16 encoded string, given unsigned char (byte) array
+  function getBase16(array) {
+    var ret = [], a = array;
+    for (var i=0; i<a.length; i++) {
+      var hex = a[i].toString(16);
+      ret[i] = (hex.length==1?"0":"")+hex;
+      if (i%4==3)
+        ret[i] += " ";
+    }
+    return ret.join("");
+  }
+  
+  //get ASCII string, with escape chars, from unsigned char (byte) array
+  function getStrRepr(array) {
+    var ret = [], a = array;
+    for (var i=0; i<a.length; i++) {
+      if        (a[i] == '\t'.charCodeAt(0)) {
+          ret[i] = "\\t";
+      } else if (a[i] == '\n'.charCodeAt(0)) {
+          ret[i] = "\\n";
+      } else if (a[i] == '\r'.charCodeAt(0)) {
+          ret[i] = "\\r";
+      } else if (a[i] == '\\'.charCodeAt(0)) {
+          ret[i] = "\\\\";
+      //printable
+      } else if (a[i] >= 0x20 && a[i] <= 0x7E) {
+          ret[i] = String.fromCharCode(a[i]);
+      //use \hex for all others
+      } else {
+          var hex = a[i].toString(16);
+          ret[i] = "\\"+(hex.length==1?"0":"")+hex; // eg. 0xab => \ab instead of \xab
+      }
+    }
+    return ret.join("");
+  }
+  
+  //-----------------------------------------------------------------
+  //Start up code
+  //-----------------------------------------------------------------
+  
+  uiSetInactive();
+  activateSDK(); //activate SDK automatically on page ready
+}
+
+document.addEventListener('deviceready', appInit, false);
+});
+ </script>
+</head>
+
+<body>
+ <div id="root">
+
+  <div class="header-pane">
+   <div id="lbReaderStatus" class="header-label"></div>
+   <div id="lbTask" class="header-label" style="font-style: italic; font-size: 0.6em;"></div>
+   <div id="lbSpin" class="header-label" style="width: 40px; display: none;"><img src="img/spin.gif"></div>
+  </div>
+
+  <!-- Console -->
+  <div class="console-pane">
+   <textarea id="console" readonly="readonly"></textarea>
+   <button id="console-clear" class="uibutton">clear</button>
+  </div>
+
+  <div class="control-pane">
+   <!-- Pages -->
+   <div class="page-pane">
+     <!-- Page: reader -->
+     <div class="page page-selected">
+       <button id="btnStartConnect" class="uibutton">Start Connect</button><br />
+       SDK state: <span id="lbSDKActivation"></span> <br />
+       <button id="btnActivateSDK" class="uibutton">Activate</button>
+       <button id="btnDeactivateSDK" class="uibutton">Deactivate</button> <br />
+       <a href="javascript:location.reload();"><button class="uibutton">Reload Page</button></a>
+     </div>
+
+     <!-- Page: swipe -->
+     <div class="page">
+       <button id="btnStartSwipe" class="uibutton">Start Waiting for Swipe</button> <br />
+       <button id="btnStopTask"   class="uibutton">Stop Any Task</button> <br />
+     </div>
+
+     <!-- Page: command -->
+     <div class="page">
+       <select id="selCommand" style="font-size: 18pt; margin: 10px; padding: 10px;">
+         <option value="GetVersion"     >Get Version</option>
+         <option value="GetSettings"    >Get Settings</option>
+         <option value="EnableTDES"     >Enable TDES</option>
+         <option value="EnableAES"      >Enable AES</option>
+         <option value="GetSerialNumber">Get Serial Number</option>
+         <option value="ClearBuffer"    >Clear Buffer</option>
+       </select>
+       <button id="btnStartSendCommand" class="uibutton">Start Send Command</button> <br />
+     </div>
+   </div>
+
+   <!-- Tabs -->
+   <ul class="tab-pane">
+    <li class="tab-item"><div class="tab-label-container">
+      <span class="tab-label tab-selected">Reader</span>
+     </div></li>
+    <li class="tab-item"><div class="tab-label-container">
+      <span class="tab-label">Swipe</span>
+     </div></li>
+    <li class="tab-item"><div class="tab-label-container">
+      <span class="tab-label">Command</span>
+     </div></li>
+   </ul>
+
+  </div>
+  
+ </div>
+</body>
+
+</html>

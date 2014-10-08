@@ -1,7 +1,7 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 //this is for testing on a browser, make sure it is removed 
 $( document ).ready(function() {
-	onDeviceReady();		
+	//onDeviceReady();
 			 
 });
 function onDeviceReady() { 

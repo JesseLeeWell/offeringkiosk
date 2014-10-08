@@ -1,60 +1,7 @@
  // Wait for Cordova to load
     //
 document.addEventListener("deviceready", onDeviceReady, false);
-document.addEventListener("resume", onDeviceReady, false);
-
-//environment
-//var environment = 'dev';
-//var environment = 'qa';
-var environment = 'prod';
-//var environment = 'local';
- // Global InAppBrowser reference
-if(environment == 'dev')
-{
-	var _baseURL =  'http://dev.continuetogive.com/';
-	var _kioskURL = 'http://dev.kiosk.continuetogive.com/';
-	
-}
-else if(environment == 'qa')
-{
-	var _baseURL = 'http://qa.continuetogive.com/';
-	var _kioskURL = 'http://qa.kiosk.continuetogive.com/';
-}
-else if(environment == 'local')
-{
-	var _baseURL = 'http://local.bugfixes.continuetogive.com/';
-	var _kioskURL = 'http://local.bugfixes.continuetogive.com/';
-}
-else if(environment == 'prod')
-{
-	var _baseURL = 'http://www.continuetogive.com/';
-	var _kioskURL = 'http://www.kiosk.continuetogive.com/';
-}
-else
-{
-	var _baseURL = 'http://dev.continuetogive.com/';
-	var _kioskURL = 'http://dev.kiosk.continuetogive.com/';
-}
-var _kiosksetupURL = 'index.php?moduleType=Module_kiosk&task=setupkiosk';
-var _forgotPinURL = 'index.php?moduleType=Module_system&task=kioskforgotpassword';
-var _contactRequestURL ='index.php?moduleType=Module_kiosk&task=appcontactrequestform';
-var _searchPage = 'index.php?moduleType=Module_Search&task=show.results';
-var _signUpPage = 'index.php?moduleType=Module_Registration&task=regflow_church&registrationstep=regcreateaccount';
-var _getPageInformationURL = 'router/Kiosk/getpageinformation?pageid=';
-var _appCheckURL = 'appcheck.php';
-var _purchasePageURL = 'index.php?moduleType=Module_Content&task=text&article=learn_more_kiosk';
-var _lockKioskHelpURL = 'index.php?moduleType=Module_Content&task=text&article=kiosk_ios_kiosk_mode';
-
-var browserwindow = null;
-var browserwindow = null;
-var _storagePageID = "storagePageID";
-var _storageDisplayName = "storageDisplayName";
-var _storageFullURL = "storageFullURL";
-var _storagePin = 'pin';
-var _kioskversion = '3.1';
-var _kiosklicense = 'store';
-//var _kiosklicense = 'enterprize';
-
+document.addEventListener("resume", onDeviceResume, false);
 
 // Cordova is ready
 //
@@ -62,7 +9,17 @@ $( document ).ready(function() {
  //onDeviceReady();
 });
 
-function onDeviceReady() { 
+function onDeviceResume()
+{
+    //alert("resume");
+    onDeviceReady();
+}
+function onDeviceReady() {
+    
+    //see if they need a new update
+    
+    checkforenterpriseupdate()
+    
 	
 	setapplesafe();
     
@@ -81,7 +38,6 @@ function onDeviceReady() {
 $(document).bind( "pagechange", function( e, data ) { 
 
 	if ( data.options.target == "#indexpage" ) {
-
 
 		setupSettingsPage();
 	}
@@ -122,6 +78,7 @@ function determinStartPage()
             
             //determine what they set as the opeing page
             var startpageselection = storageGet('startpageselection');
+            
             switch(startpageselection)
             {
                 case 'donationpage':
@@ -131,7 +88,10 @@ function determinStartPage()
                     openDonationPage('/donation_prompt?show_purchase_form=true');
                     break;
                 default:
-                    //default is just settings page, so just do nothing
+                    browserwindow.removeEventListener('loadstop', iabLoadStop);
+                    browserwindow.removeEventListener('exit', iabCloseDonation);
+                    browserwindow.close();
+                    loadSettingsPage();
                     break;
             }
             
@@ -183,6 +143,7 @@ function setapplesafe()
 		
 		//then we need to check the version
 		var urltocall = _baseURL + _appCheckURL + "?kioskversion="+_kioskversion;
+        
 		$.ajax({
 		  url: urltocall,
 		  success:function(data){
@@ -314,8 +275,8 @@ function iabCloseSearch(event) {
 	// browserwindow = window.open('index.html', '_self', 'location=yes');	
 }
 
-function iabCloseDonation(event) {	
- 
+function iabCloseDonation(event, extras) {
+   
 	
 	showUnlockKioskPage();	 
 	 browserwindow.removeEventListener('loadstop', iabLoadStop);
@@ -736,6 +697,7 @@ function setupStartScreenPage()
 }
 function loadSettingsPage()
 {
+   //setupSettingsPage();
 	
 	$(':mobile-pagecontainer').pagecontainer('change', '#indexpage', {
 			transition: 'slidefade',
@@ -891,7 +853,7 @@ function showMessage(message, callback, title, buttonName){
 		//alert(message);
 		//return true;
 		
-        title = title || "default title";
+        title = title || "Message";
         buttonName = buttonName || 'OK';
 		callback = callback || showMessageCallBack;
 		 
@@ -912,6 +874,43 @@ function showMessage(message, callback, title, buttonName){
         }
 
     }
+
+function showConfirmCallBack(buttonnumber)
+{
+	//alert("showConfirmCallBack" + buttonnumber);
+	return true;
+}
+
+function showConfirm(message, callback, title, exitName, confirmName){
+    
+    title = title || "Please Confirm";
+    confirmName = confirmName || 'OK';
+    exitName = exitName || 'Exit';
+    callback = callback || showConfirmTrueCallBack;
+    
+    if(navigator.notification && navigator.notification.confirm){
+        
+        
+        navigator.notification.confirm(
+                                     message,  // message
+                                     callback,         // callback
+                                     title,            // title
+                                     [exitName,confirmName]                  // buttonName
+                                     );
+        
+        
+    }else{
+        
+        
+        var r = confirm(message);
+        callback(r);
+        
+        
+    }
+    return true;
+    
+}
+
 function isPinSet()
 {
 	var pin = storageGet(_storagePin);
@@ -1076,7 +1075,6 @@ function getPagePaymentInformation()
 function ajaxCallKioskSetup()
 {
 
-	
 	var pageid = getPageID();
 	
 	if((!pageid || /^\s*$/.test(pageid)))
@@ -1084,10 +1082,9 @@ function ajaxCallKioskSetup()
 		
 		pageid = '';
 	}
-	var urlstring = "&name="+encodeURIComponent(storageGet('name'))+"&email="+encodeURIComponent(storageGet('email'))+"&phonenumber="+encodeURIComponent(storageGet('phonenumber'))+"&represents="+storageGet('represents')+"&kiosktype="+_kiosklicense+"&pageid="+pageid+"&kioskplatform="+encodeURIComponent(window.device.model)+"&kioskversion="+encodeURIComponent(_kioskversion);
+    var urlstring = "&name="+encodeURIComponent(storageGet('name'))+"&email="+encodeURIComponent(storageGet('email'))+"&phonenumber="+encodeURIComponent(storageGet('phonenumber'))+"&represents="+storageGet('represents')+"&kiosktype="+_kiosklicense+"&pageid="+pageid+"&kioskplatform="+encodeURIComponent(window.device.model)+"&kioskversion="+encodeURIComponent(_kioskversion);
 	
 	var urltocall = _baseURL + _kiosksetupURL + urlstring;
-	
 	// Assign handlers immediately after making the request,
 	// and remember the jqxhr object for this request
 	var jqxhr = $.post( urltocall);
@@ -1114,6 +1111,62 @@ function setupbyscreensize()
 		
 	}
 }
+
+function checkforenterpriseupdate()
+{
+    
+    //only check if it is the enterprise version
+    if(_kiosklicense == 'enterprise')
+    {
+        $.ajax({
+           url: _iosEnterpriseVersionAppCheckURL + "?kioskversion="+_kioskversion,
+           success:function(data){
+           
+           var result = (data =='true' )?'true':'false';
+           
+           
+           if(result == 'true')
+            {
+               showConfirm("Please update your Offering Kiosk app by clicking Update", updateIOSEnterpriseApp, 'Update Available',"Not Now", "Update");
+            
+           }
+           else
+           {
+              //no need to update
+           }
+           
+           
+           }
+           ,
+           fail:function(data){
+           
+              
+           }
+           });
+    }
+    
+    
+    
+}
+function updateIOSEnterpriseApp(result)
+{
+    
+    if(result == 2 || result == 'true' || result === true)
+    {
+        //alert(_enterpriseDownloadURL);
+        browserwindow = window.open(_enterpriseDownloadURL, '_blank', 'toolbar=no,location=no');
+    }
+    else
+    {
+        //alert("false updateIOSEnterpriseApp");
+        
+    }
+    
+	return true;
+    
+    
+}
+
 $( window ).resize(function() {
 setupbyscreensize();
 });
@@ -1406,6 +1459,7 @@ function getStrRepr(array) {
 }
 
 
+
 /* -- end card reader--*/
 
 /* ------ start secure kiosk -----*/
@@ -1462,6 +1516,13 @@ function secureKiosk()
 		storageSet('phonenumber', phonenumber);
 		storageSet('represents', represents);
 		
+        $.mobile.loading( 'show', {
+                         text: 'Securing Kiosk',
+                         textVisible: true,
+                         theme: 'a',
+                         html: ""
+                         });
+        
 		ajaxCallKioskSetup();		
 		
 		//make sure we send them on the correct path.

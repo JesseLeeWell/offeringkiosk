@@ -22,6 +22,7 @@
 		
        
 		<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="scripts/settings.js"></script>
 		<script type="text/javascript" charset="utf-8" src="scripts/main.js"></script>
         
         <script type="text/javascript" charset="utf-8" src="scripts/unimag.js"></script>
@@ -41,7 +42,7 @@
 				</div>
 				<div data-role="content">
 					<div style='text-align:center;'>
-						<img class = 'settingslogo'  src='images/ContinueToGive.png' style='width:60%; max-width:450px; min-width:100px;'/>
+						<img class = 'settingslogo _whitelablelogoclass' src='' style='width:60%; max-width:450px; min-width:100px;'/>
 						<p>
 							Making Giving Easy
 						</p>
@@ -292,7 +293,7 @@
 							<div class ='step-outer'>
 								<span class='step-inner-wrapper appleonly' onclick='loadLearnMorePage();'>
 									<span class='step-text'>
-										Learn more about Continue To Give
+										Learn more about <script type="text/javascript">document.write(_whitelabelfullname);</script>
 									</span>
 									<span class='step-start'>
 										 &#10140;
@@ -332,7 +333,7 @@
 							<div class ='step-outer appleonly'>
 								<span class='step-inner-wrapper' style='height:55px; line-height:55px;' onclick='loadLearnMorePage();'>
 									<span class='step-text'>
-										Learn more about Continue To Give &#10140;
+										Learn more about <script type="text/javascript">document.write(_whitelabelfullname);</script> &#10140;
 									</span>
 								</span>
 							</div>
@@ -341,7 +342,7 @@
 					
 					<a style="display:none;" href="javascript:clearDataForTesting();" data-role="button" data-transition="slidefade" data-inline="true">Clear Data</a>
 					<div style='text-align:center; padding:10px 5px 10px 5px;'>
-					To learn more about how our revolutionary fundraising tools can help your organization, visit us on the web at <a onclick='loadLearnMorePage();'>www.ContinueToGive.com</a>
+					To learn more about how our revolutionary fundraising tools can help your organization, visit us on the web at <a onclick='loadLearnMorePage();'><script type="text/javascript">document.write(_whitelabeldisplayurl);</script></a> 
 					</div>
 				</div>
 				
@@ -489,7 +490,7 @@
 							<p>
 								Want Donations to go directly to your organization's bank account?</br>
 								Want a FREE Kiosk Stand?</br>
-								Then claim your organization on Continue To Give now!
+								Then claim your organization on <script type="text/javascript">document.write(_whitelabelfullname);</script> now!
 							
 							</p>
 						
