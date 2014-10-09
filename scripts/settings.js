@@ -67,10 +67,9 @@ else if(environment == 'local')
 else if(environment == 'prod')
 {
 	var _baseURL = 'https://www.'+_whitelabel+'.com/';
-	if(whitelabel == 'continuetogive')
+	if(_whitelabel == 'continuetogive')
 	{
-		var _kioskURL = 'https://www.kiosk.'+_whitelabel+'.com/';
-		alert(_kioskURL);
+		var _kioskURL = 'https://www.kiosk.'+_whitelabel+'.com/';		
 	}
 	else
 	{
