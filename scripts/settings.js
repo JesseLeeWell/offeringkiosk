@@ -70,6 +70,7 @@ else if(environment == 'prod')
 	if(whitelabel == 'continuetogive')
 	{
 		var _kioskURL = 'https://www.kiosk.'+_whitelabel+'.com/';
+		alert(_kioskURL);
 	}
 	else
 	{
